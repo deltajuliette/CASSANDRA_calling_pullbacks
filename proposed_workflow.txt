@@ -1,0 +1,10 @@
+Workflow (Skeleton)
+- Data Collection
+-- Import all sheet names into a dictionary
+
+- Data cleaning
+-- Create custom function to calculate:
+--- 1, 4, 13 and 26-week rolling differences
+---- datasets: cesi, us/eu rates, credit spreads, us_yields, eu_yields
+C--- 1, 4, 13 and 26-week rolling percentage changes
+---- datasets: eq_indices, usd, pe, pb, como
