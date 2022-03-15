@@ -1,10 +1,30 @@
 Workflow (Skeleton)
 - Data Collection
 -- Import all sheet names into a dictionary
+- EDA
+-- Utilise pandas-profiling
+--- Address multi-collinearity
 
 - Data cleaning
--- Create custom function to calculate:
+-- Create custom functions in module (SIREN.func) to calculate:
 --- 1, 4, 13 and 26-week rolling differences
 ---- datasets: cesi, us/eu rates, credit spreads, us_yields, eu_yields
-C--- 1, 4, 13 and 26-week rolling percentage changes
+--- 1, 4, 13 and 26-week rolling percentage changes
 ---- datasets: eq_indices, usd, pe, pb, como
+--- Vol-regimes / rate-hiking cycles
+
+- Building model pipelines
+-- Create pipeline via custom function
+--- logreg, svm, gb, xgb, rf, dt, et, adaboost, catboost
+
+- Model selection
+-- Hyperparameter optimisation
+
+- Model interpretation
+-- SHAP plots
+-- Creation of SIREN barometer
+
+- Questions
+-- Metric prioritisation
+-- Testing whether seasonality is statistically significant
+-- optimise recall, ci, pycaret

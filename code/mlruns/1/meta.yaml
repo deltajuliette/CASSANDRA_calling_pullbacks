@@ -1,0 +1,4 @@
+artifact_location: file:///C:/Users/cheon/OneDrive/Desktop/GitHub/SIREN_predicting_pullbacks/code/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: clf-default-name

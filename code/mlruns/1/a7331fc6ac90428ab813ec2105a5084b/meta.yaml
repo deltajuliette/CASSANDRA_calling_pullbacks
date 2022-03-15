@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/cheon/OneDrive/Desktop/GitHub/SIREN_predicting_pullbacks/code/mlruns/1/a7331fc6ac90428ab813ec2105a5084b/artifacts
+end_time: 1646496031673
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: a7331fc6ac90428ab813ec2105a5084b
+run_uuid: a7331fc6ac90428ab813ec2105a5084b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1646496031431
+status: 3
+tags: []
+user_id: cheon

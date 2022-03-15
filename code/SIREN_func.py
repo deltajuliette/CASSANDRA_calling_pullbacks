@@ -1,4 +1,5 @@
 # Create custom functions for SIREN
+import numpy as np
 import pandas as pd
 import datetime
 
@@ -15,29 +16,40 @@ def eda_clean(df):
 def derive_yield_curves(df):
     df_tidied = df.copy()
     if sum(df_tidied.columns.str.startswith('us_')) > 0:
-        df_tidied['us_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
-        df_tidied['us_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
-        df_tidied['us_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
+        # df_tidied['us_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
+        # df_tidied['us_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
+        # df_tidied['us_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
         df_tidied['us_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
-        df_tidied['us_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
+        # df_tidied['us_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
         df_tidied['us_10y2ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 2]
         df_tidied['us_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
         df_tidied['us_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
-        df_tidied['us_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
-        df_tidied['us_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]
+        # df_tidied['us_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
+        # df_tidied['us_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]
         
-
     if sum(df_tidied.columns.str.startswith('eu_')) > 0:
-        df_tidied['eu_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
-        df_tidied['eu_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
-        df_tidied['eu_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
+        # df_tidied['eu_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
+        # df_tidied['eu_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
+        # df_tidied['eu_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
         df_tidied['eu_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
-        df_tidied['eu_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
+        # df_tidied['eu_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
         df_tidied['eu_10y2ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 2]
         df_tidied['eu_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
         df_tidied['eu_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
-        df_tidied['eu_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
-        df_tidied['eu_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]   
+        # df_tidied['eu_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
+        # df_tidied['eu_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]   
+
+    else: pass
+    return df_tidied
+
+# Calculate calendar spreads for commodities
+def derive_cal_spreads(df):
+    df_tidied = df.copy()
+    if sum(df_tidied.columns.str.startswith('brent')) > 0:
+        df_tidied['brent_13m1m'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 6]
+        
+    if sum(df_tidied.columns.str.startswith('wti')) > 0:
+        df_tidied['wti_13m1m'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 7]
 
     else: pass
     return df_tidied
@@ -127,7 +139,14 @@ def roll_pct_chg(df):
                          df_pctchg_13w.add_suffix("_13w_pctchg"), df_pctchg_26w.add_suffix("_26w_pctchg")], axis=1)
 
     return df_tidied
-    
+
+def log_transform_adjust_dates(df):
+    df['date'] = [(i - datetime.timedelta(days=i.weekday()) + datetime.timedelta(days=4)) for i in df['date']]
+    df.set_index('date', inplace=True)
+    df_log = np.log1p(df)
+
+    return df_log
+
 def adjust_dates_only(df):
     df['date'] = [(i - datetime.timedelta(days=i.weekday()) + datetime.timedelta(days=4)) for i in df['date']]
     df.set_index('date', inplace=True)
