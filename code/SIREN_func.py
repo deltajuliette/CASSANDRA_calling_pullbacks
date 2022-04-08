@@ -12,6 +12,12 @@ def eda_clean(df):
     print(f'\nColumn names: {df.columns}')
     print(f"Columns Count: \n{df.dtypes.value_counts()}")
 
+# Converting Eurodollar futures
+def derive_eurodollar_pricing(df):
+    df_tidied = df.set_index('date').apply(lambda x: 100-x).drop(columns=['ed1', 'ed2']).reset_index()
+
+    return df_tidied
+
 # Creation of yield curve(s)
 def derive_yield_curves(df):
     df_tidied = df.copy()
@@ -19,11 +25,11 @@ def derive_yield_curves(df):
         # df_tidied['us_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
         # df_tidied['us_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
         # df_tidied['us_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
-        df_tidied['us_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
+        # df_tidied['us_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
         # df_tidied['us_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
-        df_tidied['us_10y2ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 2]
-        df_tidied['us_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
-        df_tidied['us_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
+        df_tidied['us_10y2ys'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]
+        # df_tidied['us_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
+        # df_tidied['us_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
         # df_tidied['us_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
         # df_tidied['us_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]
         
@@ -31,11 +37,11 @@ def derive_yield_curves(df):
         # df_tidied['eu_30y10ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 4]
         # df_tidied['eu_30y5ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 3]
         # df_tidied['eu_30y2ys'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 2]
-        df_tidied['eu_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
+        # df_tidied['eu_30y3ms'] = df_tidied.iloc[:, 5] - df_tidied.iloc[:, 1]
         # df_tidied['eu_10y5ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 3]
-        df_tidied['eu_10y2ys'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 2]
-        df_tidied['eu_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
-        df_tidied['eu_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
+        df_tidied['eu_10y2ys'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]
+        # df_tidied['eu_10y3ms'] = df_tidied.iloc[:, 4] - df_tidied.iloc[:, 1]
+        # df_tidied['eu_5y2ys'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 2]
         # df_tidied['eu_5y3ms'] = df_tidied.iloc[:, 3] - df_tidied.iloc[:, 1]
         # df_tidied['eu_2y3ms'] = df_tidied.iloc[:, 2] - df_tidied.iloc[:, 1]   
 
